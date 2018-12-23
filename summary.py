@@ -12,7 +12,7 @@ from preprocess import clean
 
 from represent import sent2ind
 
-from nn_arch import S2SEncode, S2SDecode, AttEncode, AttDecode, AttPlot, PtrEncode, PtrDecode, PtrPlot
+from nn_arch import S2SEncode, S2SDecode, AttEncode, AttDecode, AttPlot
 
 from util import map_item
 
@@ -137,23 +137,16 @@ archs = {'s2s_encode': S2SEncode,
          's2s_decode': S2SDecode,
          'att_encode': AttEncode,
          'att_decode': AttDecode,
-         'att_plot': AttPlot,
-         'ptr_encode': PtrEncode,
-         'ptr_decode': PtrDecode,
-         'ptr_plot': PtrPlot}
+         'att_plot': AttPlot}
 
 paths = {'s2s': 'model/rnn_s2s.pkl',
-         'att': 'model/rnn_att.pkl',
-         'ptr': 'model/rnn_ptr.pkl'}
+         'att': 'model/rnn_att.pkl'}
 
 models = {'s2s_encode': load_model('s2s', embed_mat, device, 'encode'),
           's2s_decode': load_model('s2s', embed_mat, device, 'decode'),
           'att_encode': load_model('att', embed_mat, device, 'encode'),
           'att_decode': load_model('att', embed_mat, device, 'decode'),
-          'att_plot': load_plot('att', embed_mat, device),
-          'ptr_encode': load_model('ptr', embed_mat, device, 'encode'),
-          'ptr_decode': load_model('ptr', embed_mat, device, 'decode'),
-          'ptr_plot': load_plot('ptr', embed_mat, device)}
+          'att_plot': load_plot('att', embed_mat, device)}
 
 
 def plot_att(word1s, word2s, atts):
@@ -199,4 +192,3 @@ if __name__ == '__main__':
         text = input('text: ')
         print('s2s: %s' % predict(text, 's2s'))
         print('att: %s' % predict(text, 'att'))
-        print('ptr: %s' % predict(text, 'ptr'))
