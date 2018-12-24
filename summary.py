@@ -183,7 +183,7 @@ def predict(text, name):
             sent2 = torch.LongTensor([pad_seq2]).to(device)
             plot = map_item(name + '_plot', models)
             atts = plot(sent1, sent2)[0]
-            plot_att(word1s[:-1], word2s[1:] + eos, atts)
+            plot_att(word1s[:-1], word2s[1:] + [eos], atts)
         return pred
 
 
