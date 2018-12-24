@@ -16,7 +16,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 detail = False if torch.cuda.is_available() else True
 
-batch_size = 128
+batch_size = 32
 
 path_embed = 'feat/embed.pkl'
 path_word_ind = 'feat/word_ind.pkl'
