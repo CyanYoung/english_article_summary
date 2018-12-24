@@ -9,7 +9,7 @@ from gensim.corpora import Dictionary
 embed_len = 200
 min_freq = 3
 max_vocab = 10000
-seq_len1, seq_len2 = 200, 50
+seq_len1, seq_len2 = 500, 30
 
 bos, eos = '*', '#'
 
