@@ -1,11 +1,18 @@
 import json
 
+import re
+
 import nltk
 
 from random import shuffle
 
+from util import load_word_re
+
 
 max_num = int(1e5)
+
+path_stop_word = 'dict/stop_word.txt'
+stop_word_re = load_word_re(path_stop_word)
 
 
 def save(path, pairs):
@@ -14,6 +21,7 @@ def save(path, pairs):
 
 
 def clean(text):
+    text = re.sub(stop_word_re, '', text)
     words = nltk.word_tokenize(text)
     return ' '.join(words)
 
