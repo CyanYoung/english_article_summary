@@ -22,10 +22,7 @@ def save(path, pairs):
 
 def clean(text):
     text = re.sub(stop_word_re, '', text)
-    nstds = re.findall('[a-z]\.[A-Z]', text)
-    for nstd in nstds:
-        std = re.sub('\.', '. ', text)
-        text = re.sub(nstd, std, text)
+    text = re.sub('([a-z])\.([A-Z])', r'\1. \2', text)
     words = nltk.word_tokenize(text)
     return ' '.join(words)
 
