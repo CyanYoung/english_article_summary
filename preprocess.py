@@ -35,7 +35,7 @@ def prepare(path_univ, path_train, path_dev, path_test):
             if len(fields) != 2:
                 continue
             text2, text1 = fields
-            text2, text1 = clean(text2), clean(text1)
+            text1, text2 = clean(text1), clean(text2)
             pairs.append((text1.lower(), text2.lower()))
             if count > max_num:
                 break
