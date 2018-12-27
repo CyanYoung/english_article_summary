@@ -72,8 +72,8 @@ def check(probs, cand, keep_eos):
 def search(decode, state, cand):
     pad_bos = sent2ind([bos], word_inds, seq_len, 'post', keep_oov=True)
     word2 = torch.LongTensor([pad_bos]).to(device)
-    probs = decode(word2, state)[0][0]
-    probs = F.softmax(probs, dim=0).numpy()
+    prods = decode(word2, state)[0][0]
+    probs = F.softmax(prods, dim=0).numpy()
     max_probs, max_inds = check(probs, cand, keep_eos=False)
     text2s, log_sums = [bos] * cand, np.log(max_probs)
     fin_text2s, fin_logs = list(), list()
@@ -86,8 +86,8 @@ def search(decode, state, cand):
             pad_seq2 = sent2ind(text2s[i], word_inds, seq_len, 'post', keep_oov=True)
             sent2 = torch.LongTensor([pad_seq2]).to(device)
             step = min(count - 1, seq_len - 1)
-            probs = decode(sent2, state)[0][step]
-            probs = F.softmax(probs, dim=0).numpy()
+            prods = decode(sent2, state)[0][step]
+            probs = F.softmax(prods, dim=0).numpy()
             max_probs, max_inds = check(probs, cand, keep_eos=True)
             max_logs = np.log(max_probs) + log_sums[i]
             log_mat.append(max_logs)
