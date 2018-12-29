@@ -8,12 +8,12 @@ import torch.nn.functional as F
 class S2S(nn.Module):
     def __init__(self, embed_mat):
         super(S2S, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len, _weight=embed_mat)
-        self.encode = nn.GRU(self.embed_len, 200, batch_first=True)
-        self.decode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
+        self.encode = nn.GRU(embed_len, 200, batch_first=True)
+        self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.dl = nn.Sequential(nn.Dropout(0.2),
-                                nn.Linear(200, self.vocab_num))
+                                nn.Linear(200, vocab_num))
 
     def forward(self, x, y):
         x = self.embed(x)
@@ -27,9 +27,9 @@ class S2S(nn.Module):
 class S2SEncode(nn.Module):
     def __init__(self, embed_mat):
         super(S2SEncode, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len)
-        self.encode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.encode = nn.GRU(embed_len, 200, batch_first=True)
 
     def forward(self, x):
         x = self.embed(x)
@@ -41,11 +41,11 @@ class S2SEncode(nn.Module):
 class S2SDecode(nn.Module):
     def __init__(self, embed_mat):
         super(S2SDecode, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len)
-        self.decode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.dl = nn.Sequential(nn.Dropout(0.2),
-                                nn.Linear(200, self.vocab_num))
+                                nn.Linear(200, vocab_num))
 
     def forward(self, y, h1_n):
         y = self.embed(y)
@@ -56,13 +56,13 @@ class S2SDecode(nn.Module):
 class Att(nn.Module):
     def __init__(self, embed_mat):
         super(Att, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len, _weight=embed_mat)
-        self.encode = nn.GRU(self.embed_len, 200, batch_first=True)
-        self.decode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
+        self.encode = nn.GRU(embed_len, 200, batch_first=True)
+        self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.query, self.key, self.val = [nn.Linear(200, 200)] * 3
         self.dl = nn.Sequential(nn.Dropout(0.2),
-                                nn.Linear(400, self.vocab_num))
+                                nn.Linear(400, vocab_num))
 
     def forward(self, x, y):
         x = self.embed(x)
@@ -82,9 +82,9 @@ class Att(nn.Module):
 class AttEncode(nn.Module):
     def __init__(self, embed_mat):
         super(AttEncode, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len)
-        self.encode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.encode = nn.GRU(embed_len, 200, batch_first=True)
 
     def forward(self, x):
         x = self.embed(x)
@@ -95,12 +95,12 @@ class AttEncode(nn.Module):
 class AttDecode(nn.Module):
     def __init__(self, embed_mat):
         super(AttDecode, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len)
-        self.decode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.query, self.key, self.val = [nn.Linear(200, 200)] * 3
         self.dl = nn.Sequential(nn.Dropout(0.2),
-                                nn.Linear(400, self.vocab_num))
+                                nn.Linear(400, vocab_num))
 
     def forward(self, y, h1):
         y = self.embed(y)
@@ -119,10 +119,10 @@ class AttDecode(nn.Module):
 class AttPlot(nn.Module):
     def __init__(self, embed_mat):
         super(AttPlot, self).__init__()
-        self.vocab_num, self.embed_len = embed_mat.size()
-        self.embed = nn.Embedding(self.vocab_num, self.embed_len)
-        self.encode = nn.GRU(self.embed_len, 200, batch_first=True)
-        self.decode = nn.GRU(self.embed_len, 200, batch_first=True)
+        vocab_num, embed_len = embed_mat.size()
+        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.encode = nn.GRU(embed_len, 200, batch_first=True)
+        self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.query, self.key, self.val = [nn.Linear(200, 200)] * 3
 
     def forward(self, x, y):
