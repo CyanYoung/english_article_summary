@@ -116,9 +116,8 @@ with open(path_embed, 'rb') as f:
 with open(path_word_ind, 'rb') as f:
     word_inds = pk.load(f)
 
-skip_inds = [pad_ind, oov_ind]
-
 eos_ind = word_inds[eos]
+skip_inds = [pad_ind, oov_ind]
 
 ind_words = ind2word(word_inds)
 
