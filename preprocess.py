@@ -21,6 +21,7 @@ def save(path, pairs):
 
 
 def clean(text):
+    text = text.strip().lower()
     text = re.sub(stop_word_re, '', text)
     text = re.sub('([a-z])\.([A-Z])', r'\1. \2', text)
     words = nltk.word_tokenize(text)
@@ -36,7 +37,7 @@ def prepare(path_univ, path_train, path_dev, path_test):
                 continue
             text2, text1 = fields
             text1, text2 = clean(text1), clean(text2)
-            pairs.append((text1.lower(), text2.lower()))
+            pairs.append((text1, text2))
             if count > max_num:
                 break
     shuffle(pairs)
