@@ -10,7 +10,7 @@ add_flag() 添加控制符，shift() 对 text2 分别删去 bos、eos 得到 sen
 
 tokenize() 分别通过 sent1、flag_text2 建立词索引，构造 embed_mat
 
-align() 对训练数据 sent1 头部，sent2、label 尾部，填充或截取为定长序列
+align() 对非测试数据 sent1 头部，sent2、label 尾部，填充或截取为定长序列
 
 #### 3.build
 
