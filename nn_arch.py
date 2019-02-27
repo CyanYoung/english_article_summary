@@ -20,7 +20,7 @@ class S2SEncode(nn.Module):
     def __init__(self, embed_mat):
         super(S2SEncode, self).__init__()
         vocab_num, embed_len = embed_mat.size()
-        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
         self.encode = nn.GRU(embed_len, 200, batch_first=True)
 
     def forward(self, x):
@@ -33,7 +33,7 @@ class S2SDecode(nn.Module):
     def __init__(self, embed_mat):
         super(S2SDecode, self).__init__()
         vocab_num, embed_len = embed_mat.size()
-        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
         self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.dl = nn.Sequential(nn.Dropout(0.2),
                                 nn.Linear(200, vocab_num))
@@ -59,7 +59,7 @@ class AttEncode(nn.Module):
     def __init__(self, embed_mat):
         super(AttEncode, self).__init__()
         vocab_num, embed_len = embed_mat.size()
-        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
         self.encode = nn.GRU(embed_len, 200, batch_first=True)
 
     def forward(self, x):
@@ -72,7 +72,7 @@ class AttDecode(nn.Module):
     def __init__(self, embed_mat):
         super(AttDecode, self).__init__()
         vocab_num, embed_len = embed_mat.size()
-        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
         self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.qry = nn.Linear(200, 200)
         self.key = nn.Linear(200, 200)
@@ -97,7 +97,7 @@ class AttCore(nn.Module):
     def __init__(self, embed_mat):
         super(AttCore, self).__init__()
         vocab_num, embed_len = embed_mat.size()
-        self.embed = nn.Embedding(vocab_num, embed_len)
+        self.embed = nn.Embedding(vocab_num, embed_len, _weight=embed_mat)
         self.decode = nn.GRU(embed_len, 200, batch_first=True)
         self.qry = nn.Linear(200, 200)
         self.key = nn.Linear(200, 200)
